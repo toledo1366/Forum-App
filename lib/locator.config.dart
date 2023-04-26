@@ -9,6 +9,10 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:forum_app/data/datasources/remote/posts/posts_remote_service.dart'
+    as _i4;
+import 'package:forum_app/data/repositories/posts_repository/post_repository_impl.dart'
+    as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -23,6 +27,8 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
+    gh.factory<_i3.PostsRepositoryImpl>(
+        () => _i3.PostsRepositoryImpl(gh<_i4.PostsRemoteService>()));
     return this;
   }
 }
