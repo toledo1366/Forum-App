@@ -6,15 +6,14 @@ import '../../../domain/repositories/posts_repository.dart';
 import '../../../utils/resources/data_state.dart';
 import '../base_api_repository.dart';
 
-@injectable
 class PostsRepositoryImpl extends BaseApiRepository implements PostsRepository {
   final PostsRemoteService postsRemoteService;
 
   PostsRepositoryImpl(this.postsRemoteService);
-
+  
   @override
-  Future<DataState<Post>> getBreakingNewsArticles() {
-    return getStateOf<Post>(
+  Future<DataState<List<Post>>> getPosts() {
+        return getStateOf<List<Post>>(
       request: () => postsRemoteService.getPosts(),
     );
   }

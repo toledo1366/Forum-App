@@ -1,33 +1,29 @@
 import 'package:forum_app/domain/models/posts/post.dart';
+import 'package:forum_app/presentation/cubits/remote_posts/remote_posts_state.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../domain/repositories/posts_repository.dart';
 import '../../../utils/resources/data_state.dart';
 import '../base/base_cubit.dart';
 
-part 'remote_posts_state.dart';
+class RemotePostsCubit extends BaseCubit<RemotePostsState, List<Post>> {
+  final PostsRepository _postsRepository;
 
-class RemoteArticlesCubit
-    extends BaseCubit<RemotePostsState, List<Post>> {
-  final PostsRepository _apiRepository;
+  RemotePostsCubit(this._postsRepository)
+      : super(const RemotePostsLoading(), []);
 
-  RemoteArticlesCubit(this._apiRepository)
-      : super(const RemoteArticlesLoading(), []);
-
-  int _page = 1;
-
-  Future<void> getBreakingNewsArticles() async {
+  Future<void> getPosts() async {
     if (isBusy) return;
 
     await run(() async {
-      final response = await _apiRepository.getBreakingNewsArticles();
+      final response = await _postsRepository.getPosts();
 
       if (response is DataSuccess) {
-        final articles = response.data!.;
+        final posts = response.data!;
 
-        data.addAll(articles);
-        _page++;
+        data.addAll(posts);
 
-        emit(RemotePostsSuccess(articles: data, noMoreData: noMoreData));
+        emit(RemotePostsSuccess(posts: data));
       } else if (response is DataFailed) {
         emit(RemotePostsFailed(error: response.error));
       }

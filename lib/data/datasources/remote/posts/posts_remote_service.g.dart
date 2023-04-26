@@ -21,13 +21,13 @@ class _PostsRemoteService implements PostsRemoteService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<Post>> getPosts() async {
+  Future<HttpResponse<List<Post>>> getPosts() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<HttpResponse<Post>>(Options(
+        .fetch<List<dynamic>>(_setStreamType<HttpResponse<List<Post>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -39,7 +39,9 @@ class _PostsRemoteService implements PostsRemoteService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Post.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => Post.fromJson(i as Map<String, dynamic>))
+        .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

@@ -8,10 +8,9 @@ import '../../../../utils/constants/strings.dart';
 part 'posts_remote_service.g.dart';
 
 @RestApi(baseUrl: baseUrl, parser: Parser.MapSerializable)
-@injectable
 abstract class PostsRemoteService {
   factory PostsRemoteService(Dio dio, {String baseUrl}) = _PostsRemoteService;
 
   @GET('/posts')
-  Future<HttpResponse<Post>> getPosts();
+  Future<HttpResponse<List<Post>>> getPosts();
 }

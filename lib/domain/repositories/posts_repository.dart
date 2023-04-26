@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../utils/resources/data_state.dart';
 
-@injectable
 abstract class PostsRepository {
-  Future<DataState<Post>> getBreakingNewsArticles();
+  Future<DataState<List<Post>>> getPosts();
 }

@@ -13,6 +13,9 @@ import 'package:forum_app/data/datasources/remote/posts/posts_remote_service.dar
     as _i4;
 import 'package:forum_app/data/repositories/posts_repository/post_repository_impl.dart'
     as _i3;
+import 'package:forum_app/domain/repositories/posts_repository.dart' as _i6;
+import 'package:forum_app/presentation/cubits/remote_posts/remote_posts_cubit.dart'
+    as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -29,6 +32,8 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.factory<_i3.PostsRepositoryImpl>(
         () => _i3.PostsRepositoryImpl(gh<_i4.PostsRemoteService>()));
+    gh.factory<_i5.RemotePostsCubit>(
+        () => _i5.RemotePostsCubit(gh<_i6.PostsRepository>()));
     return this;
   }
 }
